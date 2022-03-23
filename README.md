@@ -22,3 +22,5 @@ hosts:
 3) sdw2 - segment
 
 6 segments - 3 by each segment host
+
+no standbymaster and no one mirror configured by default
