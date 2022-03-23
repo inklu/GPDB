@@ -1,16 +1,16 @@
 # GPDB
 Multinode Greenplum Database in Docker
 
-#RUN
+# RUN
 docker-compose up -d
 
-#Connection
+# Connection
 HOST = localhost
 PORT = 5433
 USER = gpadmin
 PASSWORD = gparray
 
-#Cluster by default
+# Cluster by default
 hosts: 
 1) mdw - master
 2) sdw1 - segment
