@@ -1,0 +1,43 @@
+## RUN on master under gpadmin
+#RUN source /usr/local/greenplum-db/greenplum_path.sh
+#RUN ssh
+version: '3'
+
+services:
+#Master host
+  mdw:
+    build: ./
+    image: gpdb
+    restart: unless-stopped
+    ports:
+      - 5433:5432
+    volumes:
+      - ./hostfiles:/home/gpadmin/hostfiles
+      - mdw:/data
+    environment:
+      GPDB_HOST_TYPE: master
+#Segment1 host
+  sdw1:
+    build: ./
+    image: gpdb
+    restart: unless-stopped
+    volumes:
+      - ./hostfiles:/home/gpadmin/hostfiles
+      - sdw1:/data
+    environment:
+      GPDB_HOST_TYPE: segment
+#Segment2 host
+  sdw2:
+    build: ./
+    image: gpdb
+    restart: unless-stopped
+    volumes:
+      - ./hostfiles:/home/gpadmin/hostfiles
+      - sdw2:/data
+    environment:
+      GPDB_HOST_TYPE: segment
+
+volumes:
+  mdw:
+  sdw1:
+  sdw2:
