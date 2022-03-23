@@ -1,5 +1,6 @@
 # GPDB
 Multinode Greenplum Database in Docker
+Based on ubuntu:18.04 docker image and greenplum-6.20.0 
 
 # RUN
 docker-compose up -d
