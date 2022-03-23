@@ -7,13 +7,15 @@ Based on ubuntu:18.04 docker image and greenplum-6.20.0
 $ docker-compose up -d
 
 # Connection
-HOST = localhost
+HOST localhost
 
-PORT = 5433
+PORT 5433
 
-USER = gpadmin
+USER gpadmin
 
-PASSWORD = gparray
+PASSWORD gparray
+
+DATABASE gpadmin
 
 # Cluster by default
 hosts: 
