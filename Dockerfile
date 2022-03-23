@@ -54,7 +54,7 @@ RUN set -e;\
 #Installation of SSH, sudo
 RUN set -ex; \
 	apt-get update; \
-	apt-get install -y --no-install-recommends openssh-server openssh-client sudo; \
+	apt-get install -y --no-install-recommends openssh-server openssh-client sudo wget; \
 	rm -rf /var/lib/apt/lists/*
 #Configure SSH
 RUN set -e;\
@@ -72,9 +72,11 @@ RUN set -e; \
 #Installation of GPDB
 #VOLUME /data
 WORKDIR /home/gpadmin
-COPY ./greenplum-db-6.20.0-ubuntu18.04-amd64.deb ./
+#COPY ./greenplum-db-6.20.0-ubuntu18.04-amd64.deb ./
 #RUN mkdir -p /data; chown -R gpadmin:gpadmin /data; \
 RUN set -ex; \
+	wget --no-check-certificate \
+	  https://github.com/greenplum-db/gpdb/releases/download/6.20.0/greenplum-db-6.20.0-ubuntu18.04-amd64.deb; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends ./greenplum-db-6.20.0-ubuntu18.04-amd64.deb; \
 	rm -rf /var/lib/apt/lists/*; \
