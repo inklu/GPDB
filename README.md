@@ -4,8 +4,6 @@ Multinode Greenplum Database in Docker
 Based on ubuntu:18.04 docker image and greenplum-6.20.0 
 
 # RUN
-$ wget https://github.com/greenplum-db/gpdb/releases/download/6.20.0/greenplum-db-6.20.0-ubuntu18.04-amd64.deb
-
 $ docker-compose up -d
 
 # Connection
