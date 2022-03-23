@@ -10,8 +10,11 @@ $ docker-compose up -d
 
 # Connection
 HOST = localhost
+
 PORT = 5433
+
 USER = gpadmin
+
 PASSWORD = gparray
 
 # Cluster by default
