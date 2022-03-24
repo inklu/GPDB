@@ -27,7 +27,7 @@ hosts:
 
 no standbymaster and no one mirror configured by default
 
-#Cluster configuration
+# Cluster configuration
 Before the first run make changes to configuration files in folder hostfile/
 1) gpinitsystem_config - DATA_DIRECTORY=(/data/primary /data/primary /data/primary) determine a number of segments on a one segment host
 2) hostfile_exkeys - all of hosts of the cluster
