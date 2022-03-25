@@ -89,16 +89,17 @@ RUN set -e;\
 	/bin/bash -c 'source /usr/local/greenplum-db/greenplum_path.sh'; \
   	echo "source /usr/local/greenplum-db/greenplum_path.sh" >> ./.bashrc
 
-#RUN service ssh 
-RUN mkdir ./.ssh/ ./hostfiles && \
+#RUN service ssh and prepare folders for configs and external data files
+RUN mkdir ./.ssh/ ./hostfiles ./staging && \
   ssh-keygen -t rsa -q -f ./.ssh/id_rsa -P "" && \
   cat ./.ssh/id_rsa.pub >> ./.ssh/authorized_keys
 #ssh-keyscan -t rsa -f hostfile_exkeys >> ./.ssh/known_hosts
 
-#CMD service ssh start
+#CMD docker-entrypoint.sh with gpfdist run as cmd parameter
 COPY --chown=gpadmin:gpadmin ./*.sh ./
 RUN chmod +x ./docker-entrypoint.sh ./infinite_loop.sh
 ENTRYPOINT ["/home/gpadmin/docker-entrypoint.sh"]
 CMD ["~/infinite_loop.sh"]
+#CMD ["/usr/bin/greenplum-db/bin/gpfdist -d ~/staging -p 8081"]
 
 #ENTRYPOINT ["/bin/bash"]

@@ -12,6 +12,7 @@ services:
     ports:
       - 5433:5432
     volumes:
+      - ./staging:/home/gpadmin/staging
       - ./hostfiles:/home/gpadmin/hostfiles
       - mdw:/data
     environment:
@@ -22,6 +23,7 @@ services:
     image: gpdb
     restart: unless-stopped
     volumes:
+      - ./staging:/home/gpadmin/staging
       - ./hostfiles:/home/gpadmin/hostfiles
       - sdw1:/data
     environment:
@@ -32,6 +34,7 @@ services:
     image: gpdb
     restart: unless-stopped
     volumes:
+      - ./staging:/home/gpadmin/staging
       - ./hostfiles:/home/gpadmin/hostfiles
       - sdw2:/data
     environment:
