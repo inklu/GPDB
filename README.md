@@ -35,3 +35,7 @@ Before the first run make changes to configuration files in folder hostfile/
 
 Make changes to docker-compose.yml
 1) define your own number of docker segment services with own data volume
+
+# Using gpfdist 
+gpfdist is started on each host on port 8081. Files must be placed in ./staging directory which is attach to each host as docker volume
+Example of typing LOCATION ('gpfdist://mdw:8081/*.txt')
