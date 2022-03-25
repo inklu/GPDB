@@ -39,4 +39,4 @@ Make changes to docker-compose.yml
 # Using gpfdist 
 gpfdist is started on each host on port 8081. Files must be placed in ./staging directory which is attach to each host as docker volume.
 
-Example of typing LOCATION ('gpfdist://mdw:8081/*.txt')
+Example of typing LOCATION ('gpfdist://mdw:8081/*.txt') - mdw is a docker service name of the master host by default
