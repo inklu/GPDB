@@ -99,9 +99,12 @@ USER gpadmin
 #RUN set -e;\
 #  	echo "source /usr/local/greenplum-db/greenplum_path.sh" >> ./.bashrc; \
 ##	source /usr/local/greenplum-db/greenplum_path.sh';  #not working
-#PXF Configuration
+ENV GPHOME /usr/local/greenplum-db
+ENV PATH $GPHOME/bin:$PATH
 RUN set -e;\
-  	echo "source /usr/local/greenplum-db/greenplum_path.sh" >> ./.bashrc; 
+	/bin/bash -c "source /usr/local/greenplum-db/greenplum_path.sh"; \
+  	echo "source $GPHOME/greenplum_path.sh" >> ./.bashrc; \
+  	echo "export PATH=$PATH" >> ./.bashrc; 
 #	export GPHOME=/usr/local/greenplum-db; \
 #	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64;\
 #	export PXF_HOME=/usr/local/pxf-gp6;\
