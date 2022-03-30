@@ -48,14 +48,15 @@ fi
 
 #START DBMS
 if [ "$GPDB_HOST_TYPE" == "master" ]; then
-	echo "Start Greenplum DBMS..."
+	echo "Starting Greenplum DBMS..."
 	export MASTER_DATA_DIRECTORY=/data/master/gpseg-1
 	/usr/local/greenplum-db/bin/gpstart -a --verbose
 fi
 
 #START PXF
-if [ "$GPDB_PXF_ENABLED" ]; then
-	echo "Start PXF..."
+#echo "GPDB_PXF_ENABLED = $GPDB_PXF_ENABLED"
+if [ "$GPDB_PXF_ENABLED" == "true" ]; then
+	echo "Starting PXF..."
 	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 	/usr/local/pxf-gp6/bin/pxf start
 fi

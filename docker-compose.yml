@@ -7,8 +7,8 @@ services:
 #Master host
   mdw:
     build: ./
-#    image: gpdb:pxf
-    image: gpdb:latest
+#    image: gpdb
+    image: gpdb:pxf
     restart: unless-stopped
     ports:
       - 5433:5432
@@ -18,11 +18,13 @@ services:
       - mdw:/data
     environment:
       GPDB_HOST_TYPE: master
+      GPDB_PXF_ENABLED: true
+      PXF_PORT: 5998
 #Segment1 host
   sdw1:
     build: ./
-#    image: gpdb:pxf
-    image: gpdb:latest
+#    image: gpdb
+    image: gpdb:pxf
     restart: unless-stopped
     volumes:
       - ./staging:/home/gpadmin/staging
@@ -30,11 +32,13 @@ services:
       - sdw1:/data
     environment:
       GPDB_HOST_TYPE: segment
+      GPDB_PXF_ENABLED: true
+      PXF_PORT: 5998
 #Segment2 host
   sdw2:
     build: ./
-#    image: gpdb:pxf
-    image: gpdb:latest
+#    image: gpdb
+    image: gpdb:pxf
     restart: unless-stopped
     volumes:
       - ./staging:/home/gpadmin/staging
@@ -42,6 +46,8 @@ services:
       - sdw2:/data
     environment:
       GPDB_HOST_TYPE: segment
+      GPDB_PXF_ENABLED: true
+      PXF_PORT: 5998
 
 volumes:
   mdw:

@@ -2,25 +2,30 @@ FROM gpdb:latest
 
 WORKDIR /home/gpadmin
 
-#Installation PXF
+#Installation PXF and dependences
 COPY ./debs/pxf-gp6-6.3.0-2-ubuntu18.04-amd64.deb ./
+USER root
+#	echo "deb http://mirror.yandex.ru/ubuntu/ bionic main contrib non-free universe" >> /etc/apt/sources.list; \
+#	echo "deb-src http://mirror.yandex.ru/ubuntu/ bionic main contrib non-free" >> /etc/apt/sources.list; \
 RUN set -ex; \
-	sudo apt-get update; \
-	sudo apt-get install -y --no-install-recommends openjdk-8-jdk curl; \
-	sudo apt-get install -y --no-install-recommends ./pxf-gp6-6.3.0-2-ubuntu18.04-amd64.deb; \
-	sudo rm -rf /var/lib/apt/lists/*; \
-        sudo rm ./pxf-gp6-6.3.0-2-ubuntu18.04-amd64.deb; \
-	sudo chown -R gpadmin:gpadmin /usr/local/pxf-gp*
+	apt-get update; \
+	apt-get install -y --no-install-recommends openjdk-8-jre-headless curl; \
+	apt-get install -y --no-install-recommends ./pxf-gp6-6.3.0-2-ubuntu18.04-amd64.deb; \
+	rm -rf /var/lib/apt/lists/*; \
+        rm ./pxf-gp6-6.3.0-2-ubuntu18.04-amd64.deb; \
+	chown -R gpadmin:gpadmin /usr/local/pxf-gp*
+
 
 #PXF Configuration
+USER gpadmin
+#	export GPDB_PXF_ENABLED="true";\
+#	export PXF_PORT=5998;\
 RUN set -e;\
 	export GPHOME=/usr/local/greenplum-db; \
 	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64;\
 	export PXF_HOME=/usr/local/pxf-gp6;\
 	export PXF_BASE=/usr/local/pxf-gp6/base;\
 	export PXF_LOADER_PATH=$PXF_BASE/lib;\
-	export PXF_PORT=5998;\
-	export GPDB_PXF_ENABLED="true";\
 	/usr/local/pxf-gp6/bin/pxf prepare;\
 	/usr/local/pxf-gp6/bin/pxf register;\
   	echo "source /usr/local/greenplum-db/greenplum_path.sh" >> ./.bashrc; \
@@ -29,7 +34,7 @@ RUN set -e;\
 	echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> ./.bashrc;\
 	echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /usr/local/pxf-gp6/base/conf/pxf-env.sh;\
 	echo "export PXF_LOADER_PATH=$PXF_BASE/lib" >> /usr/local/pxf-gp6/base/conf/pxf-env.sh;\
-	echo "export PXF_LOADER_PATH=$PXF_BASE/lib" >> ./.bashrc;\
-	echo 'export PXF_PORT=5998' >> ./.bashrc;\
-	echo 'export GPDB_PXF_ENABLED="true"' >> ./.bashrc;
+	echo "export PXF_LOADER_PATH=$PXF_BASE/lib" >> ./.bashrc;
+#	echo 'export PXF_PORT=5998' >> ./.bashrc;
+#	echo 'export GPDB_PXF_ENABLED="true"' >> ./.bashrc;
 
