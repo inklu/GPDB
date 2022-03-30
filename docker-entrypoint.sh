@@ -53,6 +53,13 @@ if [ "$GPDB_HOST_TYPE" == "master" ]; then
 	/usr/local/greenplum-db/bin/gpstart -a --verbose
 fi
 
+#START PXF
+if [ "$GPDB_PXF_ENABLED" ]; then
+	echo "Start PXF..."
+	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+	/usr/local/pxf-gp6/bin/pxf start
+fi
+
 #infinite loop for background container runing
 echo "exec $@"
 exec $@

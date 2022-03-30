@@ -7,7 +7,7 @@ services:
 #Master host
   mdw:
     build: ./
-    image: gpdb
+    image: gpdb:pxf
     restart: unless-stopped
     ports:
       - 5433:5432
@@ -20,7 +20,7 @@ services:
 #Segment1 host
   sdw1:
     build: ./
-    image: gpdb
+    image: gpdb:pxf
     restart: unless-stopped
     volumes:
       - ./staging:/home/gpadmin/staging
@@ -31,7 +31,7 @@ services:
 #Segment2 host
   sdw2:
     build: ./
-    image: gpdb
+    image: gpdb:pxf
     restart: unless-stopped
     volumes:
       - ./staging:/home/gpadmin/staging
