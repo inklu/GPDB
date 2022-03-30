@@ -40,3 +40,14 @@ Make changes to docker-compose.yml
 gpfdist is started on each host on port 8081. Files must be placed in ./staging directory which is attach to each host as docker volume.
 
 Example of typing LOCATION ('gpfdist://mdw:8081/*.txt') - mdw is a docker service name of the master host by default
+
+# PXF
+It can be enabled by using gpdb:pxf image from Dockerfile_PXF. It depends on pxf-gp6-6.3.0-2-ubuntu18.04-amd64.deb which can be downloaded from https://network.pivotal.io/products/pivotal-gpdb/ 
+
+$PXF_HOME=/usr/local/pxf-gp6
+
+$PXF_BASE=$PXF_HOME/base
+
+$PXF_LOADER_PATH=$PXF_BASE/lib
+
+$PXF_PORT=5998 (standard 5888 was occupied in my deployment)
