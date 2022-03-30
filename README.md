@@ -42,7 +42,7 @@ gpfdist is started on each host on port 8081. Files must be placed in ./staging 
 Example of typing LOCATION ('gpfdist://mdw:8081/*.txt') - mdw is a docker service name of the master host by default
 
 # PXF
-It can be enabled by using gpdb:pxf image from Dockerfile_PXF. It depends on pxf-gp6-6.3.0-2-ubuntu18.04-amd64.deb which can be downloaded from https://network.pivotal.io/products/pivotal-gpdb/ or can be build from source https://github.com/greenplum-db/pxf
+It can be enabled by using gpdb:pxf image from Dockerfile_PXF. It depends on pxf-gp6-6.3.0-2-ubuntu18.04-amd64.deb which can be downloaded from https://network.pivotal.io/products/pivotal-gpdb/ or can be built from source https://github.com/greenplum-db/pxf
 
 $PXF_HOME=/usr/local/pxf-gp6
 
