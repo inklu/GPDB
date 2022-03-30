@@ -56,7 +56,7 @@ fi
 
 #START PXF
 #echo "GPDB_PXF_ENABLED = $GPDB_PXF_ENABLED"
-if [ "$GPDB_PXF_ENABLED" == "true" && "$GPDB_HOST_TYPE" == "master" ]; then
+if [ "$GPDB_PXF_ENABLED" == "true" -a "$GPDB_HOST_TYPE" == "master" ]; then
 	echo "Starting PXF as a cluster..."
 #	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 	/usr/local/pxf-gp6/bin/pxf cluster start
