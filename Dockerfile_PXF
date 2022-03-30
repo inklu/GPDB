@@ -20,21 +20,25 @@ RUN set -ex; \
 USER gpadmin
 #	export GPDB_PXF_ENABLED="true";\
 #	export PXF_PORT=5998;\
+ENV GPHOME /usr/local/greenplum-db
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ENV PXF_HOME /usr/local/pxf-gp6
+ENV PXF_BASE $PXF_HOME/base
+ENV PXF_LOADER_PATH $PXF_BASE/lib
+ENV PATH $PXF_HOME/bin:$PATH
+
+RUN /usr/local/pxf-gp6/bin/pxf prepare;\
+    /usr/local/pxf-gp6/bin/pxf register
+
 RUN set -e;\
-	export GPHOME=/usr/local/greenplum-db; \
-	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64;\
-	export PXF_HOME=/usr/local/pxf-gp6;\
-	export PXF_BASE=/usr/local/pxf-gp6/base;\
-	export PXF_LOADER_PATH=$PXF_BASE/lib;\
-	/usr/local/pxf-gp6/bin/pxf prepare;\
-	/usr/local/pxf-gp6/bin/pxf register;\
   	echo "source /usr/local/greenplum-db/greenplum_path.sh" >> ./.bashrc; \
 	echo 'export PXF_BASE=/usr/local/pxf-gp6/base' >> ./.bashrc; \
 	echo 'export PXF_HOME=/usr/local/pxf-gp6' >> ./.bashrc;\
 	echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> ./.bashrc;\
 	echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /usr/local/pxf-gp6/base/conf/pxf-env.sh;\
 	echo "export PXF_LOADER_PATH=$PXF_BASE/lib" >> /usr/local/pxf-gp6/base/conf/pxf-env.sh;\
-	echo "export PXF_LOADER_PATH=$PXF_BASE/lib" >> ./.bashrc;
+	echo "export PXF_LOADER_PATH=$PXF_BASE/lib" >> ./.bashrc;\
+	echo "export PATH=$PXF_HOME/bin:$PATH" >> ./.bashrc;
 #	echo 'export PXF_PORT=5998' >> ./.bashrc;
 #	echo 'export GPDB_PXF_ENABLED="true"' >> ./.bashrc;
 

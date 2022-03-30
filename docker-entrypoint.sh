@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source /usr/local/greenplum-db/greenplum_path.sh
+source ~/.bashrc
 sudo service ssh start
 cd ~
 
@@ -55,10 +56,10 @@ fi
 
 #START PXF
 #echo "GPDB_PXF_ENABLED = $GPDB_PXF_ENABLED"
-if [ "$GPDB_PXF_ENABLED" == "true" ]; then
-	echo "Starting PXF..."
-	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-	/usr/local/pxf-gp6/bin/pxf start
+if [ "$GPDB_PXF_ENABLED" == "true" && "$GPDB_HOST_TYPE" == "master" ]; then
+	echo "Starting PXF as a cluster..."
+#	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+	/usr/local/pxf-gp6/bin/pxf cluster start
 fi
 
 #infinite loop for background container runing

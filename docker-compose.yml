@@ -6,6 +6,7 @@ version: '3'
 services:
 #Master host
   mdw:
+    hostname: mdw
     build: ./
 #    image: gpdb
     image: gpdb:pxf
@@ -22,6 +23,7 @@ services:
       PXF_PORT: 5998
 #Segment1 host
   sdw1:
+    hostname: sdw1
     build: ./
 #    image: gpdb
     image: gpdb:pxf
@@ -36,6 +38,7 @@ services:
       PXF_PORT: 5998
 #Segment2 host
   sdw2:
+    hostname: sdw2
     build: ./
 #    image: gpdb
     image: gpdb:pxf
