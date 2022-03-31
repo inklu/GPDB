@@ -83,16 +83,6 @@ RUN set -ex; \
         rm ./greenplum-db-6.20.0-ubuntu18.04-amd64.deb; \
 	chown -R gpadmin:gpadmin /usr/local/greenplum*
 
-##Installation PXF
-#COPY ./debs/pxf-gp6-6.3.0-2-ubuntu18.04-amd64.deb ./
-#RUN set -ex; \
-#	apt-get update; \
-#	apt-get install -y --no-install-recommends openjdk-8-jdk curl; \
-#	apt-get install -y --no-install-recommends ./pxf-gp6-6.3.0-2-ubuntu18.04-amd64.deb; \
-#	rm -rf /var/lib/apt/lists/*; \
-#       rm ./pxf-gp6-6.3.0-2-ubuntu18.04-amd64.deb; \
-#	chown -R gpadmin:gpadmin /usr/local/pxf-gp*
-
 USER gpadmin
 
 #GPDB Configuration
@@ -100,26 +90,11 @@ USER gpadmin
 #  	echo "source /usr/local/greenplum-db/greenplum_path.sh" >> ./.bashrc; \
 ##	source /usr/local/greenplum-db/greenplum_path.sh';  #not working
 ENV GPHOME /usr/local/greenplum-db
-ENV PATH $GPHOME/bin:$PATH
+ENV PATH $GPHOME/bin:$GPHOME/ext/python/bin:$PATH
 RUN set -e;\
 	/bin/bash -c "source /usr/local/greenplum-db/greenplum_path.sh"; \
   	echo "source $GPHOME/greenplum_path.sh" >> ./.bashrc; \
   	echo "export PATH=$PATH" >> ./.bashrc; 
-#	export GPHOME=/usr/local/greenplum-db; \
-#	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64;\
-#	export PXF_HOME=/usr/local/pxf-gp6;\
-#	export PXF_BASE=/usr/local/pxf-gp6/base;\
-#	export PXF_LOADER_PATH=$PXF_BASE/lib;\
-#	export PXF_PORT=5998;\
-#	/usr/local/pxf-gp6/bin/pxf prepare;\
-#	/usr/local/pxf-gp6/bin/pxf register;\
-#	echo 'export PXF_BASE=/usr/local/pxf-gp6/base' >> ./.bashrc; \
-#	echo 'export PXF_HOME=/usr/local/pxf-gp6' >> ./.bashrc;\
-#	echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> ./.bashrc;\
-#	echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /usr/local/pxf-gp6/base/conf/pxf-env.sh;\
-#	echo "export PXF_LOADER_PATH=$PXF_BASE/lib" >> /usr/local/pxf-gp6/base/conf/pxf-env.sh;\
-#	echo "export PXF_LOADER_PATH=$PXF_BASE/lib" >> ./.bashrc;\
-#	echo "export PXF_PORT=5998" >> ./.bashrc;
 
 #RUN service ssh and prepare folders for configs and external data files
 RUN mkdir ./.ssh/ ./hostfiles ./staging && \

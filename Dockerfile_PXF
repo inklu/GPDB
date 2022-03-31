@@ -5,8 +5,7 @@ WORKDIR /home/gpadmin
 #Installation PXF and dependences
 COPY ./debs/pxf-gp6-6.3.0-2-ubuntu18.04-amd64.deb ./
 USER root
-#	echo "deb http://mirror.yandex.ru/ubuntu/ bionic main contrib non-free universe" >> /etc/apt/sources.list; \
-#	echo "deb-src http://mirror.yandex.ru/ubuntu/ bionic main contrib non-free" >> /etc/apt/sources.list; \
+
 RUN set -ex; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends openjdk-8-jre-headless curl; \
@@ -18,9 +17,7 @@ RUN set -ex; \
 
 #PXF Configuration
 USER gpadmin
-#	export GPDB_PXF_ENABLED="true";\
-#	export PXF_PORT=5998;\
-#ENV GPHOME /usr/local/greenplum-db
+
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV PXF_HOME /usr/local/pxf-gp6
 ENV PXF_BASE $PXF_HOME/base
@@ -38,11 +35,5 @@ RUN set -e;\
 	echo "export PXF_LOADER_PATH=$PXF_BASE/lib" >> $PXF_BASE/conf/pxf-env.sh;\
 	echo "export PXF_LOADER_PATH=$PXF_BASE/lib" >> ./.bashrc;\
 	echo "export PATH=$PATH" >> ./.bashrc;
-#	echo 'export PXF_BASE=/usr/local/pxf-gp6/base' >> ./.bashrc; \
-#	echo 'export PXF_HOME=/usr/local/pxf-gp6' >> ./.bashrc;\
-#	echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> ./.bashrc;\
-#	echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /usr/local/pxf-gp6/base/conf/pxf-env.sh;\
-#	echo "export PATH=$PATH" >> ./.bashrc;
-#	echo 'export PXF_PORT=5998' >> ./.bashrc;\
-#	echo 'export GPDB_PXF_ENABLED="true"' >> ./.bashrc;
+
 
