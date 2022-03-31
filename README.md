@@ -28,14 +28,13 @@ hosts:
 
 no standbymaster and no one mirror configured by default
 
-# Cluster configuration
+# Cluster initialization
 Before the first run make changes to configuration files in folder `hostfile/`
-1) `gpinitsystem_config` - `DATA_DIRECTORY=(/data/primary /data/primary /data/primary)` determine a number of segments on a one segment host
-2) `hostfile_exkeys` - all of hosts of the cluster
-3) `hostfile_gpinitsystem` - only segment hosts of the cluster
+1. `gpinitsystem_config` - `DATA_DIRECTORY=(/data/primary /data/primary /data/primary)` determine a number of segments on a one segment host
+2. `hostfile_exkeys` - all of hosts of the cluster
+3. `hostfile_gpinitsystem` - only segment hosts of the cluster
 
-Make changes to `docker-compose.yml`
-1) define your own number of docker segment services with own data volume
+Make changes to `docker-compose.yml` - define your own number of docker segment services with own data volume
 
 # Using `gpfdist`
 `gpfdist` is started on each host on port 8081. Files must be placed in `./staging` directory which is attached to each host as docker volume.
