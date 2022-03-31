@@ -1,15 +1,13 @@
-## RUN on master under gpadmin
-#RUN source /usr/local/greenplum-db/greenplum_path.sh
-#RUN ssh
 version: '3'
 
 services:
 #Master host
   mdw:
     hostname: mdw
-    build: ./
-#    image: gpdb
-    image: gpdb:pxf
+#    build: ./
+#      dockerfile: Dockerfile_PXF
+#    image: trueknight/gpdb
+    image: trueknight/gpdb:pxf
     restart: unless-stopped
     ports:
       - 5433:5432
@@ -24,9 +22,10 @@ services:
 #Segment1 host
   sdw1:
     hostname: sdw1
-    build: ./
-#    image: gpdb
-    image: gpdb:pxf
+#    build: ./
+#      dockerfile: Dockerfile_PXF
+#    image: trueknight/gpdb
+    image: trueknight/gpdb:pxf
     restart: unless-stopped
     volumes:
       - ./staging:/home/gpadmin/staging
@@ -34,14 +33,13 @@ services:
       - sdw1:/data
     environment:
       GPDB_HOST_TYPE: segment
-      GPDB_PXF_ENABLED: true
-      PXF_PORT: 5998
 #Segment2 host
   sdw2:
     hostname: sdw2
-    build: ./
-#    image: gpdb
-    image: gpdb:pxf
+#    build: ./
+#      dockerfile: Dockerfile_PXF
+#    image: trueknight/gpdb
+    image: trueknight/gpdb:pxf
     restart: unless-stopped
     volumes:
       - ./staging:/home/gpadmin/staging
@@ -49,8 +47,6 @@ services:
       - sdw2:/data
     environment:
       GPDB_HOST_TYPE: segment
-      GPDB_PXF_ENABLED: true
-      PXF_PORT: 5998
 
 volumes:
   mdw:
