@@ -5,7 +5,7 @@ Based on ubuntu:18.04 docker image and greenplum-6.20.0
 
 # RUN
 `$ docker-compose up -d`
-or you can use `docker pull trueknight/gpdb:tagname` with tagname `latest` and `pxf`. `latest` not includes PXF
+or you can use `docker pull trueknight/gpdb:tagname` with tagname `latest` and `pxf`. `latest` does not include PXF
 
 # Connection
 HOST `localhost`
