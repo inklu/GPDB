@@ -16,7 +16,7 @@ USER `gpadmin`
 
 PASSWORD `gparray`
 
-DATABASE `gpadmin`
+DATABASE `template1`
 
 # Cluster by default
 hosts: 
