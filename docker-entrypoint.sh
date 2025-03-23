@@ -32,25 +32,25 @@ if [ "$GPDB_HOST_TYPE" == "segment" ] && [ ! -d "/data/primary" -o ! -d "/data/m
 fi
 
 # GPINIT on master host and GPSTART
-if [ "$GPDB_HOST_TYPE" == "master" -o "$GPDB_HOST_TYPE" == "standbymaster" ] && [ ! -f ~/gpconfigs/gpinitsystem_config ] && [ ! -d /data/master/gpseg-1 ]; then
-    echo "Making a copy of configs from hostfiles to master..."
-    if [ ! -d ~/gpconfigs ]; then
-        mkdir ~/gpconfigs
-    fi
-    cp ~/hostfiles/hostfile_gpinitsystem ~/gpconfigs/
-    cp ~/hostfiles/gpinitsystem_config ~/gpconfigs/
-    echo "GPDB Initializing..."
-#    if /usr/local/greenplum-db/bin/gpinitsystem -a -c ~/gpconfigs/gpinitsystem_config -h ~/gpconfigs/hostfile_gpinitsystem -O ~/gpconfigs/config_template; then
-    if /usr/local/greenplum-db/bin/gpinitsystem -a -c ~/gpconfigs/gpinitsystem_config -h ~/gpconfigs/hostfile_gpinitsystem; then
-        echo "Finilizing GPDB initialization..."
-        echo 'host     all         all             0.0.0.0/0             trust' >> /data/master/gpseg-1/pg_hba.conf
-        export MASTER_DATA_DIRECTORY=/data/master/gpseg-1
-        echo "export MASTER_DATA_DIRECTORY=/data/master/gpseg-1" >> ~/.bashrc
-        /usr/local/greenplum-db/bin/gpstop -ra
-    else
-        echo "GPDB initialization failed. Check logs for details."
-        exit 1
-    fi
+if [ "$GPDB_HOST_TYPE" == "master" -o "$GPDB_HOST_TYPE" == "standbymaster" ] && [ ! -f ~/gpconfigs/gpinitsystem_config ]; then
+	echo "Making a copy of configs from hostfiles to master..."
+	if [ ! -d ~/gpconfigs ]; then
+		mkdir ~/gpconfigs
+	fi
+	cp ~/hostfiles/hostfile_gpinitsystem ~/gpconfigs/
+	cp ~/hostfiles/gpinitsystem_config ~/gpconfigs/
+	echo "GPDB Initializing..."
+	/usr/local/greenplum-db/bin/gpinitsystem -a \
+		-c ~/gpconfigs/gpinitsystem_config \
+		-h ~/gpconfigs/hostfile_gpinitsystem
+#		-O ~/gpconfigs/config_template
+	echo "Finilizing GPDB initialization..."
+	echo 'host     all         all             0.0.0.0/0             trust' >> /data/master/gpseg-1/pg_hba.conf
+	export MASTER_DATA_DIRECTORY=/data/master/gpseg-1
+	echo "export MASTER_DATA_DIRECTORY=/data/master/gpseg-1" >> ~/.bashrc
+#	/usr/local/greenplum-db/bin/gpconfig -s TimeZone
+#	/usr/local/greenplum-db/bin/gpconfig -c TimeZone -v 'US/Pacific'
+	/usr/local/greenplum-db/bin/gpstop -ra
 fi
 
 # START DBMS
