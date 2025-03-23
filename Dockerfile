@@ -2,12 +2,15 @@ FROM ubuntu:18.04
 #Set Locale 
 ARG LANG=en_US
 ARG LOCALE="${LANG}.UTF-8"
-#RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
-#    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
-#ENV LANG en_US.utf8
 RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
     && localedef -i $LANG -c -f UTF-8 -A /usr/share/locale/locale.alias $LOCALE
-ENV LANG $LOCALE
+ENV LANG=$LOCALE
+RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ENV LANG en_US.utf8
+
+#ENV LANG=C.UTF-8 \
+#    LC_ALL=C.UTF-8
 
 #Configure /etc/systl.conf parameters
 RUN set -e;\
@@ -40,7 +43,8 @@ RUN set -e;\
 		echo "#vm.dirty_background_bytes = 1610612736 #more than 64GB Memory"; \
 		echo "#vm.dirty_bytes = 4294967296 #more than 64GB Memory"; \
 		awk 'BEGIN {OFMT = "%.0f";} /MemTotal/ {print "vm.min_free_kbytes =", $2 * .03;}' /proc/meminfo; \
-	} >> /etc/systcl.conf
+	} >> /etc/sysctl.conf
+#RUN sysctl -p
 
 #Configure System Resources Limits - /etc/security/limits.conf
 RUN set -e;\
@@ -72,11 +76,12 @@ RUN set -e; \
 #Installation of GPDB
 #VOLUME /data
 WORKDIR /home/gpadmin
-#COPY ./greenplum-db-6.20.0-ubuntu18.04-amd64.deb ./
+COPY ./debs/greenplum-db-6.20.0-ubuntu18.04-amd64.deb ./
 #RUN mkdir -p /data; chown -R gpadmin:gpadmin /data; \
+#RUN set -ex; \
+#	wget --no-check-certificate \
+#	  https://github.com/greenplum-db/gpdb/releases/download/6.20.0/greenplum-db-6.20.0-ubuntu18.04-amd64.deb; \
 RUN set -ex; \
-	wget --no-check-certificate \
-	  https://github.com/greenplum-db/gpdb/releases/download/6.20.0/greenplum-db-6.20.0-ubuntu18.04-amd64.deb; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends ./greenplum-db-6.20.0-ubuntu18.04-amd64.deb; \
 	rm -rf /var/lib/apt/lists/*; \

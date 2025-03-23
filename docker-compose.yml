@@ -1,16 +1,20 @@
-version: '3'
+#version: '3'
 
 services:
 #Master host
   mdw:
+    depends_on:
+      - sdw1
+      - sdw2
     hostname: mdw
 #    build: ./
 #      dockerfile: Dockerfile_PXF
 #    image: trueknight/gpdb
     image: trueknight/gpdb:pxf
-    restart: unless-stopped
+    restart: on-failure
     ports:
-      - 5433:5432
+      - "8083:8081"
+      - "5433:5432"
     volumes:
       - ./staging:/home/gpadmin/staging
       - ./hostfiles:/home/gpadmin/hostfiles
@@ -21,32 +25,39 @@ services:
       PXF_PORT: 5998
 #Segment1 host
   sdw1:
+#    depends_on:
+#      - mdw
     hostname: sdw1
 #    build: ./
 #      dockerfile: Dockerfile_PXF
 #    image: trueknight/gpdb
     image: trueknight/gpdb:pxf
-    restart: unless-stopped
+    restart: on-failure
     volumes:
       - ./staging:/home/gpadmin/staging
       - ./hostfiles:/home/gpadmin/hostfiles
       - sdw1:/data
     environment:
       GPDB_HOST_TYPE: segment
+      PXF_PORT: 5998
 #Segment2 host
   sdw2:
+#    depends_on:
+#      - mdw
     hostname: sdw2
 #    build: ./
 #      dockerfile: Dockerfile_PXF
 #    image: trueknight/gpdb
     image: trueknight/gpdb:pxf
-    restart: unless-stopped
+#    restart: unless-stopped
+    restart: on-failure
     volumes:
       - ./staging:/home/gpadmin/staging
       - ./hostfiles:/home/gpadmin/hostfiles
       - sdw2:/data
     environment:
       GPDB_HOST_TYPE: segment
+      PXF_PORT: 5998
 
 volumes:
   mdw:
