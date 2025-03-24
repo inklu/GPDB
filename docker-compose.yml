@@ -3,9 +3,9 @@
 services:
 #Master host
   mdw:
-    depends_on:
-      - sdw1
-      - sdw2
+#    depends_on:
+#      - sdw1
+#      - sdw2
     hostname: mdw
 #    build: ./
 #      dockerfile: Dockerfile_PXF
