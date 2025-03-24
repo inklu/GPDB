@@ -18,6 +18,9 @@ PASSWORD `gparray`
 
 DATABASE `template1`
 
+If connections outside of the localhost are not allowed change `/data/master/gpseg-1/pg_hba.conf` on master host (mdw container) and restart the server.
+For instance add a line `host  all  all  0.0.0.0/0  trust` to pg_hba.conf
+
 # Cluster by default
 hosts: 
 1) mdw - master
