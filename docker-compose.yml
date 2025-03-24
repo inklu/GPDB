@@ -13,7 +13,7 @@ services:
     image: trueknight/gpdb:pxf
     restart: on-failure
     ports:
-      - "8083:8081"
+      - "8081:8081"
       - "5433:5432"
     volumes:
       - ./staging:/home/gpadmin/staging
